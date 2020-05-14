@@ -43,6 +43,9 @@ public interface UserDao {
     @Query("select * from stu inner join user on stu.id = user.id order by score asc")
     List<InnerResult> innerQuery();
 
+    @Query("select * from user left join stu on stu.id = user.id order by score asc")
+    List<InnerResult> leftQuery();
+
     /**
      * 删除原理是根据主键来删除的，所以千万要保证主键正确
      * @param user

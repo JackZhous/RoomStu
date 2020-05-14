@@ -2,6 +2,8 @@ package com.jz.room;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
+import xc.com.apt.annotation.BindeView;
+import xc.com.apt.api.XcInject;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,17 +15,23 @@ import com.jz.room.room.Stu;
 import com.jz.room.room.User;
 import com.jz.room.room.UserDao;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private UserDao dao;
     private static final String TAG = "j_tag";
+    @BindeView(R.id.display)
+    TextView dis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        XcInject.bind(this);
+        Log.i(TAG, "display is null " + (dis == null));
         dao = MyRoom.getInstance(getApplicationContext()).userDao();
         printInnerResult();
     }
@@ -46,13 +54,12 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, u.toString());
         }
         Log.i(TAG, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
-
     }
 
 
     private void printInnerResult(){
         Log.i(TAG, ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-        List<InnerResult> users = dao.innerQuery();
+        List<InnerResult> users = dao.leftQuery();
         for(InnerResult u : users){
             Log.i(TAG, u.toString());
         }
