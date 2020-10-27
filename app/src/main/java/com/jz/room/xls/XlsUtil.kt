@@ -72,7 +72,7 @@ class XlsUtil(val ctx : Context, val room : MyRoom) {
 
     }
 
-    private fun <T> readExcel(file: InputStream, parse: (row: XSSFRow?, formulaEvaluator: XSSFFormulaEvaluator?) -> T) : List<T> {
+    private fun <T> readExcel(file: InputStream, parse: (row: XSSFRow?, formulaEvaluator: XSSFFormulaEvaluator?) -> T?) : List<T> {
         try {
             val workbook = XSSFWorkbook(file)
             val sheet = workbook.getSheetAt(0)
@@ -81,11 +81,9 @@ class XlsUtil(val ctx : Context, val room : MyRoom) {
             val list : MutableList<T> = ArrayList()
             for (r in 0..rowsCount) {
                 val row = sheet.getRow(r)
-                list.add(parse(row, formulaEvaluator))
-//                for(c in 0..row.physicalNumberOfCells){
-//                    LogUtil.i("c " + c + getCellAsString(row, c, formulaEvaluator))
-//                }
-//                return emptyList()
+                parse(row, formulaEvaluator)?.let {
+                    list.add(it)
+                }
             }
             return list
         }catch (e : NullPointerException){
@@ -95,14 +93,19 @@ class XlsUtil(val ctx : Context, val room : MyRoom) {
     }
 
 
-    private fun parsePerformDiaryItem(row: XSSFRow?, formulaEvaluator: XSSFFormulaEvaluator?) : PerfectDiary{
+    private fun parsePerformDiaryItem(row: XSSFRow?, formulaEvaluator: XSSFFormulaEvaluator?) : PerfectDiary?{
         val code = getCellAsString(row, perfectDiary[0], formulaEvaluator)
         val name = getCellAsString(row, perfectDiary[1], formulaEvaluator)
+        if(code.isNullOrEmpty() && name.isNullOrEmpty()){
+            return null
+        }
         val price = getCellAsString(row, perfectDiary[2], formulaEvaluator)
         val discount = getCellAsString(row, perfectDiary[3], formulaEvaluator)
         val vPrice = getCellAsString(row, perfectDiary[4], formulaEvaluator)
         val svDisc = getCellAsString(row, perfectDiary[5], formulaEvaluator)
         val svPrice = getCellAsString(row, perfectDiary[6], formulaEvaluator)
+
+
 
         val ret = PerfectDiary(name, code, price, discount, vPrice, svDisc, svPrice)
         getCellAsString(row, perfectDiary[7], formulaEvaluator)?.apply {
@@ -111,25 +114,31 @@ class XlsUtil(val ctx : Context, val room : MyRoom) {
         return ret
     }
 
-    private fun parseCXCItem(row: XSSFRow?, formulaEvaluator: XSSFFormulaEvaluator?) : CXC{
-        val code = getCellAsString(row, perfectDiary[0], formulaEvaluator)
-        val name = getCellAsString(row, perfectDiary[1], formulaEvaluator)
-        val unit = getCellAsString(row, perfectDiary[2], formulaEvaluator)
-        val price = getCellAsString(row, perfectDiary[3], formulaEvaluator)
-        val discount = getCellAsString(row, perfectDiary[4], formulaEvaluator)
-        val disPrice = getCellAsString(row, perfectDiary[5], formulaEvaluator)
-        val unitHelper = getCellAsString(row, perfectDiary[6], formulaEvaluator)
+    private fun parseCXCItem(row: XSSFRow?, formulaEvaluator: XSSFFormulaEvaluator?) : CXC?{
+        val code = getCellAsString(row, cxc[0], formulaEvaluator)
+        val name = getCellAsString(row, cxc[1], formulaEvaluator)
+        if(code.isNullOrEmpty() || name.isNullOrEmpty()){
+            return null
+        }
+        val unit = getCellAsString(row, cxc[2], formulaEvaluator)
+        val price = getCellAsString(row, cxc[3], formulaEvaluator)
+        val discount = getCellAsString(row, cxc[4], formulaEvaluator)
+        val disPrice = getCellAsString(row, cxc[5], formulaEvaluator)
+        val unitHelper = getCellAsString(row, cxc[6], formulaEvaluator)
 
         val ret = CXC(name, code, unit, price, discount, disPrice, unitHelper)
-        getCellAsString(row, perfectDiary[7], formulaEvaluator)?.apply {
+        getCellAsString(row, cxc[7], formulaEvaluator)?.apply {
             ret.remark = this
         }
         return ret
     }
 
-    private fun parseMeikeItem(row: XSSFRow?, formulaEvaluator: XSSFFormulaEvaluator?) : MeiKe{
+    private fun parseMeikeItem(row: XSSFRow?, formulaEvaluator: XSSFFormulaEvaluator?) : MeiKe?{
         val name = getCellAsString(row, mieke[0], formulaEvaluator)
         val unit = getCellAsString(row, mieke[1], formulaEvaluator)
+        if(unit.isNullOrEmpty() && name.isNullOrEmpty()){
+            return null
+        }
         val patchNo = getCellAsString(row, mieke[2], formulaEvaluator)
         val price = getCellAsString(row, mieke[3], formulaEvaluator)
         val discount = getCellAsString(row, mieke[4], formulaEvaluator)
