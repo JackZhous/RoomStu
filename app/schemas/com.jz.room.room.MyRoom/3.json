@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "7f79e69d39a751b0d4510b408ba8f4a1",
+    "identityHash": "6d0c36b777f7c491a60d8ff7f999d43f",
     "entities": [
       {
-        "tableName": "User",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `sex` TEXT, `age` INTEGER NOT NULL, `lover` TEXT, `uid` INTEGER NOT NULL)",
+        "tableName": "PerfectDiary",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `code` TEXT, `price` TEXT, `dis_price` TEXT, `vip_price` TEXT, `sv_dis_price` TEXT, `svip_price` TEXT, `remark` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -15,34 +15,52 @@
             "notNull": true
           },
           {
-            "fieldPath": "name",
+            "fieldPath": "productName",
             "columnName": "name",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "sex",
-            "columnName": "sex",
+            "fieldPath": "barCode",
+            "columnName": "code",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "age",
-            "columnName": "age",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "lover",
-            "columnName": "lover",
+            "fieldPath": "price",
+            "columnName": "price",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "uid",
-            "columnName": "uid",
-            "affinity": "INTEGER",
-            "notNull": true
+            "fieldPath": "discount",
+            "columnName": "dis_price",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "vipP",
+            "columnName": "vip_price",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sDiscount",
+            "columnName": "sv_dis_price",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "svipP",
+            "columnName": "svip_price",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "remark",
+            "columnName": "remark",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -55,8 +73,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "Stu",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `score` INTEGER NOT NULL)",
+        "tableName": "MeiKe",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT, `unit` TEXT, `patchDate` TEXT, `price` TEXT, `discount` TEXT, `outPrice` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -65,16 +83,40 @@
             "notNull": true
           },
           {
-            "fieldPath": "name",
+            "fieldPath": "productName",
             "columnName": "name",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "score",
-            "columnName": "score",
-            "affinity": "INTEGER",
-            "notNull": true
+            "fieldPath": "unit",
+            "columnName": "unit",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "patchDate",
+            "columnName": "patchDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "price",
+            "columnName": "price",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "discount",
+            "columnName": "discount",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "outPrice",
+            "columnName": "outPrice",
+            "affinity": "TEXT",
+            "notNull": false
           }
         ],
         "primaryKey": {
@@ -90,7 +132,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7f79e69d39a751b0d4510b408ba8f4a1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6d0c36b777f7c491a60d8ff7f999d43f')"
     ]
   }
 }

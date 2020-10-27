@@ -1,2 +1,2 @@
 rootProject.name='TestRoom'
-include ':app', ':apt-annotation', ':apt-api', ':apt-processor'
+include ':app'
