@@ -16,6 +16,7 @@ import com.jz.room.room.table.CXC
 import com.jz.room.room.table.MeiKe
 import com.jz.room.room.table.PerfectDiary
 import com.jz.room.xls.FileUtil.Companion.openFile
+import com.jz.room.xls.LogUtil
 import com.jz.room.xls.XlsUtil
 import java.lang.StringBuilder
 
@@ -54,7 +55,10 @@ class MainsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initView()
+        val test = FlowTest()
+        test.main()
+        LogUtil.i("this is main thread")
+//        initView()
 //        printTable(room.perfectDiaryDao().queryAllDiary())
 //        printTableM(room.meiKeDao().queryAllDiary())
 //        printTableC(room.cxcDao().queryAllDiary())
